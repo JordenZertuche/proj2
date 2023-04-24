@@ -23,6 +23,8 @@ public class Rational {
     public Rational(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
+        if (denominator == 0)
+                System.out.println("Warning: the Denominator can not be 0!!");
     }
 
     //create a method that called negate that will reverse the sign of a rational number
@@ -61,6 +63,91 @@ public class Rational {
         return new Rational(newNumerator, newDenominator);
     }
 
-    //write an instance method that will reduce a rational number to its lowest terms by finding the common divisor (GCD) of the numerator and denominator and dividing through. 
+    //write an instance method that will reduce a rational number to its lowest terms by finding the common divisor (GCD) of the numerator and denominator and dividing through. This method should be a pure method; it should not modify the instance variables of the object.
+    
+    public Rational multiply(Rational r) {
+        int newNumerator = this.numerator * r.numerator;
+        int newDenominator = this.denominator * r.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    //create a method called add that takes a Rational number as an argument
+
+    public Rational divide(Rational r) {
+        int newNumerator = this.numerator * r.denominator;
+        int newDenominator = this.denominator * r.numerator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    //add it to the rational number represented by the current object, and returns a new Rational object.
+
+    public Rational reduce() {
+        int gcd = gcd(this.numerator, this.denominator);
+        return new Rational(this.numerator / gcd, this.denominator / gcd);
+    }
+
+    private int gcd(int numerator2, int denominator2) {
+        return 0;
+    }
+
+    //create several methods to add factions using the Rational class
+
+    public boolean equals(Rational r) {
+        return this.numerator == r.numerator && this.denominator == r.denominator;
+    }
+
+    //create a method called equals that takes a Rational number as an argument and returns true if the invoking Rational object is equal to the argument, and false otherwise.
+
+    public int compareTo(Rational r) {
+        int thisNumerator = this.numerator * r.denominator;
+        int otherNumerator = r.numerator * this.denominator;
+        return thisNumerator - otherNumerator;
+    }
+
+    //modify the constructor so that it takes no arguments and so that it generates a Rational number with random values for the numerator and denominator in the range of [-100, 100]. if there is an attempt to generate a Rational Number with a denominator of 0, the constructor should select a random new number.
+
+    public Rational(int numerator, int denominator, boolean reduce) {
+        this.numerator = numerator;
+        this.denominator = denominator;
+        if (reduce) {
+            int gcd = gcd(this.numerator, this.denominator);
+            this.numerator /= gcd;
+            this.denominator /= gcd;
+        }
+    }
+
+    //create a constructor that takes three arguments and uses them to initialize the attributes. The third argument should be a boolean that indicates whether the rational number should be reduced to lowest terms. If the third argument is true, the constructor should reduce the rational number to lowest terms. If the third argument is false, the constructor should not reduce the rational number to lowest terms.
+
+    public Rational(double d) {
+        String s = String.valueOf(d);
+        int digitsDec = s.length() - 1 - s.indexOf('.');
+        int denom = 1;
+        for (int i = 0; i < digitsDec; i++) {
+            d *= 10;
+            denom *= 10;
+        }
+        int num = (int) Math.round(d);
+        this.numerator = num;
+        this.denominator = denom;
+        int gcd = gcd(this.numerator, this.denominator);
+        this.numerator /= gcd;
+        this.denominator /= gcd;
+    }
+
+    //create a constructor that takes a double as an argument and converts it to a rational number. You can assume that the double is not negative. Hint: you can use the Math.round method to convert a floating-point number to an integer.
+
+    public static Rational add(Rational r1, Rational r2) {
+        int newNumerator = r1.numerator * r2.denominator + r2.numerator * r1.denominator;
+        int newDenominator = r1.denominator * r2.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
+
+    //create a static method called add that takes two Rational numbers as arguments, and returns a new Rational object. The method should not modify the objects that it is invoked on.
+
+    public static Rational subtract(Rational r1, Rational r2) {
+        int newNumerator = r1.numerator * r2.denominator - r2.numerator * r1.denominator;
+        int newDenominator = r1.denominator * r2.denominator;
+        return new Rational(newNumerator, newDenominator);
+    }
 
 }

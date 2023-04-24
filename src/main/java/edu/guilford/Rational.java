@@ -42,7 +42,7 @@ public class Rational {
     }
 
     //create a method that is called invert and swaps the numerator and denominator 
-
+    //by doing this, you can invert a rational number
     public Rational add(Rational r) {
         int newNumerator = this.numerator * r.denominator + r.numerator * this.denominator;
         int newDenominator = this.denominator * r.denominator;
